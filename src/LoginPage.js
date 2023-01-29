@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, Button, StyleSheet, ImageBackground } from 'react-native';
+import { styles } from './styles';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { postLogin } from './api/Login';
 
@@ -67,44 +68,5 @@ function LoginComponent({ navigation }) {
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  padding: {
-    marginBottom: 50,
-    marginTop: 50,
-  },
-  Title: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    fontWeight: 'bold',
-    fontSize: 20,
-    color: 'white',
-    textAlign: 'center',
-    marginBottom: 10,
-  },
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  label: {
-    color: 'yellow',
-    marginBottom: 8,
-    fontSize: 20,
-  },
-  input: {
-    borderWidth: 1,
-    borderColor: 'white',
-    color: 'white',
-    padding: 8,
-    width: '80%',
-    marginBottom: 20,
-  },
-  button: {
-    marginTop: 30,
-    marginBottom: 10,
-    borderColor: '#FFFFFF',
-  },
-});
 
 export default LoginComponent;

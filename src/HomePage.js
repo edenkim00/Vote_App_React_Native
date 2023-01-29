@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import { TouchableOpacity, ImageBackground, View, Text, TextInput, Button, StyleSheet } from 'react-native';
+import { TouchableOpacity, ImageBackground, View, Text, Button } from 'react-native';
 import { vote } from './api/Vote';
+import { styles } from './styles';
 import RNPickerSelect from 'react-native-picker-select';
 import DatePicker from 'react-native-date-picker';
 
@@ -39,19 +40,20 @@ function HomeComponent({ navigation }) {
       <ImageBackground source={require('../assets/backgrounds.jpg')} style={{ ...styles.container, width: '100%', height: '100%' }} >
         <Text style={{ ...styles.Title, fontSize: 40, marginBottom: 20 }}>Sports Hall</Text>
         <Text style={styles.Title}>court vote system</Text>
-        <Text style={styles.Title}>@NLCS.JEJU</Text>    
-        <Text style={styles.padding}></Text>    
+        <Text style={styles.Title}>@NLCS.JEJU</Text>
+        <Text style={styles.padding}></Text>
         <Text style={styles.label}>Date</Text>
         <>
           <TouchableOpacity style={styles.input}
             onPress={() => setOpen(true)}
           >
             <View>
-              <Text style={{ color: 'white', fontSize: 20, padding: 5, textAlign: 'center' }}>{new Date(date.valueOf() + 9 * 60 * 60 * 1000).toISOString().substring(0, 10)} ▽</Text>
+              <Text style={{ color: 'white', fontSize: 15, textAlign: 'center' }}>{new Date(date.valueOf() + 9 * 60 * 60 * 1000).toISOString().substring(0, 10)} ▽</Text>
             </View>
           </TouchableOpacity>
           <DatePicker
             modal
+            mode="date"
             open={open}
             date={date}
             onConfirm={(date) => {
@@ -62,25 +64,24 @@ function HomeComponent({ navigation }) {
           />
         </>
         <Text style={styles.label}>Sports</Text>
-        <View style={styles.center}>
+        <View style={{ borderColor: 'white', borderWidth: 1, width: '80%', marginBottom: 20, }}>
           <RNPickerSelect title="" onValueChange={(value) => setSports(value)}
             placeholder={{
               label: 'Select a sport ▽',
               value: '',
             }}
             items={[
-              { label: 'Basketball', value: 'Basketball' },
-              { label: 'Badminton', value: 'Badminton' },
-              { label: 'Volleyball', value: 'Volleyball' },
+              { label: 'Basketball', value: 'Basketball  ▽' },
+              { label: 'Badminton', value: 'Badminton  ▽' },
+              { label: 'Volleyball', value: 'Volleyball  ▽' },
             ]}
             style={{
-              inputIOS: { textAlign: 'center', color: '#FFFFFF', fontSize: 20, padding: 5 },
-              inputAndroid: { textAlign: 'center', color: '#FFFFFF', fontSize: 20, padding: 5 },
-              placeholder: { textAlign: 'center', color: '#FFFFFF', fontSize: 20, padding: 5 },
+              inputIOS: { textAlign: 'center', color: '#FFFFFF', fontSize: 15, padding: 8 },
+              inputAndroid: { textAlign: 'center', color: '#FFFFFF', fontSize: 15, padding: 8 },
+              placeholder: { textAlign: 'center', color: '#FFFFFF', fontSize: 15, padding: 8 },
             }}
           />
         </View>
-
         <View style={styles.button}>
           <Button title="Vote" onPress={handleVote} />
         </View>
@@ -88,54 +89,5 @@ function HomeComponent({ navigation }) {
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  padding: {
-    marginBottom: 50,
-    marginTop: 50,
-  },
-  center: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    borderWidth: 1,
-    borderColor: 'white',
-    padding: 2,
-    width: '80%',
-  },
-  Title: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    fontWeight: 'bold',
-    fontSize: 20,
-    color: 'white',
-    textAlign: 'center',
-    marginBottom: 10,
-  },
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  label: {
-    marginBottom: 5,
-    fontSize: 20,
-    color: '#FFFF00',
-  },
-  input: {
-    borderWidth: 1,
-    borderColor: 'white',
-    padding: 2,
-    color: 'white',
-    width: '80%',
-    marginTop: 10,
-    marginBottom: 20,
-  },
-  button: {
-    marginTop: 30,
-    marginBottom: 10,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
 
 export default HomeComponent;
