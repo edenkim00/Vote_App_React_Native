@@ -35,7 +35,10 @@ const styles = StyleSheet.create({
     button: {
       marginTop: 30,
       marginBottom: 10,
-      borderColor: '#FFFFFF',
+      borderColor: '#00FFFF',
+      width: '30%',
+      borderWidth: 2,
+      borderRadius: 10,
     },
   });
 

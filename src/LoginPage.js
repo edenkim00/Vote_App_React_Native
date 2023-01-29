@@ -62,7 +62,7 @@ function LoginComponent({ navigation }) {
           secureTextEntry={true}
         />
         <View style={styles.button}>
-          <Button title="Login" onPress={handleLogin} />
+          <Button title="Login" onPress={handleLogin} color='#FFFFFF' />
         </View>
       </ImageBackground>
     </View>

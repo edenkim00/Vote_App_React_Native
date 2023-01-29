@@ -83,7 +83,7 @@ function HomeComponent({ navigation }) {
           />
         </View>
         <View style={styles.button}>
-          <Button title="Vote" onPress={handleVote} />
+          <Button title="Vote" onPress={handleVote} color='#FFFFFF' />
         </View>
       </ImageBackground>
     </View>
