@@ -1,7 +1,7 @@
 const { apiServerDomain } = require('./constants');
 
 async function getEmailValidation(email) {
-    const apiUrl = `${apiServerDomain}/app/email-validation?email=${email}`;
+    const apiUrl = `${apiServerDomain}/app/send-email?email=${email}`;
     const myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
 

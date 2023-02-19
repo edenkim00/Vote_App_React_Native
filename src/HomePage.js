@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { TouchableOpacity, ImageBackground, View, Text, Button } from 'react-native';
+import { Alert, TouchableOpacity, ImageBackground, View, Text, Button } from 'react-native';
 import { vote } from './api/Vote';
 import { styles } from './styles';
 import RNPickerSelect from 'react-native-picker-select';
@@ -13,31 +13,32 @@ function HomeComponent({ navigation }) {
   // TODO : grade deafult값 계산되도록 변경하기
   const handleVote = async () => {
     if (date == '') {
-      alert('날짜를 선택해주세요.')
+      Alert.alert('Please select the date to vote.')
       return
     }
     if (sports == '') {
-      alert('투표하실 종목을 선택해주세요.')
+      Alert.alert('Please select the sports to vote.')
       return
     }
 
     const apiResult = await vote(date, sports);
     if (apiResult.code == 1000) {
-      alert("투표가 반영되었습니다.");
+      Alert.alert("Successfully Vote counted.");
     }
     else if (apiResult.code == 1001) {
-      alert("다시 시도해주세요.");
+      Alert.alert("Please retry again later.");
     }
     else if (apiResult.code == 4001) {
-      alert("일시적인 오류로 투표가 반영되지 않았습니다. 나중에 다시 시도해주세요.");
+      Alert.alert("Please retry again later.");
     }
     else if (apiResult.code == 5001) {
-      alert("이미 투표하셨습니다.");
+      Alert.alert("Your vote are already counted in this date.");
     }
   }
   return (
     <View style={styles.container}>
       <ImageBackground source={require('../assets/backgrounds.jpg')} style={{ ...styles.container, width: '100%', height: '100%' }} >
+        <Text style={styles.paddingTop}></Text>
         <Text style={{ ...styles.Title, fontSize: 40, marginBottom: 20 }}>Sports Hall</Text>
         <Text style={styles.Title}>court vote system</Text>
         <Text style={styles.Title}>@NLCS.JEJU</Text>
@@ -71,9 +72,9 @@ function HomeComponent({ navigation }) {
               value: '',
             }}
             items={[
-              { label: 'Basketball', value: 'Basketball  ▽' },
-              { label: 'Badminton', value: 'Badminton  ▽' },
-              { label: 'Volleyball', value: 'Volleyball  ▽' },
+              { label: 'Basketball', value: 'Basketball' },
+              { label: 'Badminton', value: 'Badminton' },
+              { label: 'Volleyball', value: 'Volleyball' },
             ]}
             style={{
               inputIOS: { textAlign: 'center', color: '#FFFFFF', fontSize: 15, padding: 8 },
@@ -82,6 +83,7 @@ function HomeComponent({ navigation }) {
             }}
           />
         </View>
+        <Text style={styles.paddingTop}></Text>
         <View style={styles.button}>
           <Button title="Vote" onPress={handleVote} color='#FFFFFF' />
         </View>

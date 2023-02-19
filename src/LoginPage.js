@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, Button, StyleSheet, ImageBackground } from 'react-native';
+import { Alert, View, Text, TextInput, Button, StyleSheet, ImageBackground } from 'react-native';
 import { styles } from './styles';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { postLogin } from './api/Login';
@@ -9,35 +9,33 @@ function LoginComponent({ navigation }) {
   const [password, setPassword] = useState('');
 
   const handleLogin = async () => {
-    // TODELTE 
-    // navigation.navigate('Home')
+    navigation.navigate('BottomTab');
 
     const domain = email.split('@')[1]
-    // if (domain != 'pupils.nlcsjeju.kr') {
-    //   alert('이메일 형식이 맞지 않습니다.')
-    //   return
-    // }
-    // if (password.length < 4 || password.length > 12) {
-    //   alert('비밀번호는 4-12글자여야 합니다')
-    //   return
-    // }
-    // const emailRegExp = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
-    // if (email.match(emailRegExp) == null) {
-    //   alert('이메일 형식을 지켜주세요');
-    //   return
-    // }
-
-    // const apiResult = await postLogin(email, password);
-    // console.log(apiResult)
-    // // success = 1000
-    // if (apiResult.code == 1000) {
-    //   const loginInfo = apiResult.result;
-    //   await AsyncStorage.setItem('loginInfo', JSON.stringify(loginInfo));
-    //   alert("로그인에 성공하였습니다.");
-    // } else if (apiResult.code == 3001) {
-    //   alert("잘못된 아이디 또는 비밀번호를 입력하셨습니다. 아이디 비밀번호를 다시 확인해주세요.");
-    // }
-    navigation.navigate('BottomTab')
+    if (domain != 'pupils.nlcsjeju.kr') {
+      Alert.alert('This is not a school email.')
+      return
+    }
+    if (password.length < 4 || password.length > 12) {
+      Alert.alert('Password should be 4-12 characters.')
+      return
+    }
+    const emailRegExp = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
+    if (email.match(emailRegExp) == null) {
+      Alert.alert('Please type the correct email.');
+      return
+    }
+    const apiResult = await postLogin(email, password);
+    if (apiResult.code == 1000) {
+      const loginInfo = apiResult.result;
+      await AsyncStorage.setItem('loginInfo', JSON.stringify(loginInfo));
+      navigation.navigate('BottomTab')
+      return;
+    } else if (apiResult.code == 3001) {
+      Alert.alert("Check the email and password again.");
+      return;
+    }
+    Alert.alert('Login Failed, Try again later.')
 
   }
 
@@ -61,8 +59,16 @@ function LoginComponent({ navigation }) {
           onChangeText={(text) => setPassword(text)}
           secureTextEntry={true}
         />
-        <View style={styles.button}>
-          <Button title="Login" onPress={handleLogin} color='#FFFFFF' />
+        <View flexDirection='row'>
+          <View style={styles.button}>
+            <Button title="Login" onPress={handleLogin} color='#FFFFFF' />
+          </View>
+          <View style={styles.button_signup}>
+            <Button title="Sign Up" onPress={() => { navigation.navigate('SignUpPage1') }} color='#FFFFFF' />
+          </View>
+        </View>
+        <View style={styles.button_forgotPassword}>
+          <Button title="Forgot Password" onPress={() => { navigation.navigate('PasswordPage1') }} color='#FFFFFF' />
         </View>
       </ImageBackground>
     </View>

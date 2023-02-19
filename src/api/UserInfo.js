@@ -1,10 +1,13 @@
 const { apiServerDomain } = require('./constants');
+const { getJWTToken } = require('./utils');
 
-async function userInfo(name, grade) {
+async function userInfo() {
   const apiUrl = apiServerDomain + '/app/mypage-info';
   const myHeaders = new Headers();
   myHeaders.append("Content-Type", "application/json");
 
+  const jwtToken = await getJWTToken();
+  myHeaders.append("x-access-token", jwtToken);
 
   const requestOptions = {
     method: 'GET',
