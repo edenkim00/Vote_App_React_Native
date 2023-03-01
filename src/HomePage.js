@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Alert, TouchableOpacity, ImageBackground, View, Text, Button } from 'react-native';
-import { vote } from './api/Vote';
+import { vote, voteChange } from './api/Vote';
 import { styles } from './styles';
 import RNPickerSelect from 'react-native-picker-select';
 import DatePicker from 'react-native-date-picker';
@@ -12,28 +12,69 @@ function HomeComponent({ navigation }) {
   const [sports, setSports] = useState('');
   // TODO : grade deafult값 계산되도록 변경하기
   const handleVote = async () => {
-    if (date == '') {
-      Alert.alert('Please select the date to vote.')
-      return
-    }
-    if (sports == '') {
-      Alert.alert('Please select the sports to vote.')
+    try {
+      if (date == '') {
+        Alert.alert('Please select the date to vote.')
+        return
+      }
+      if (sports == '') {
+        Alert.alert('Please select the sports to vote.')
+        return
+      }
+
+      const apiResult = await vote(new Date(date.valueOf() + 9 * 60 * 60 * 1000).toISOString().substring(0, 10), sports);
+      if (apiResult.code == 1000) {
+        Alert.alert("Successfully Vote counted.");
+        return
+      }
+      else if (apiResult.code == 1001) {
+        Alert.alert("Please retry again later.");
+        return
+      }
+      else if (apiResult.code == 3001) {
+        Alert.alert("Please retry again later.");
+        return
+      }
+      else if (apiResult.code == 4001) {
+        Alert.alert("Please retry again later.");
+        return
+      }
+      else if (apiResult.code == 5001) {
+        Alert.alert("Your vote are already counted in this date.", "Do you wanna change your vote?",
+          [
+            {
+              text: 'No',
+              onPress: () => { return },
+              style: 'No',
+            },
+            {
+              text: 'Change Vote', onPress: async () => {
+                const apiResult = await voteChange(new Date(date.valueOf() + 9 * 60 * 60 * 1000).toISOString().substring(0, 10), sports);
+                if (apiResult.code == 1000) {
+                  Alert.alert("Successfully Vote counted.");
+                  return
+                }
+                else if (apiResult.code == 1001) {
+                  Alert.alert("Please retry again later.");
+                  return
+                }
+                else if (apiResult.code == 3001) {
+                  Alert.alert("Please retry again later.");
+                  return
+                }
+                else if (apiResult.code == 4001) {
+                  Alert.alert("Please retry again later.");
+                  return
+                }
+              }
+            },
+          ]);
+      }
+    } catch (err) {
+      Alert.alert("Please retry again later.");
       return
     }
 
-    const apiResult = await vote(date, sports);
-    if (apiResult.code == 1000) {
-      Alert.alert("Successfully Vote counted.");
-    }
-    else if (apiResult.code == 1001) {
-      Alert.alert("Please retry again later.");
-    }
-    else if (apiResult.code == 4001) {
-      Alert.alert("Please retry again later.");
-    }
-    else if (apiResult.code == 5001) {
-      Alert.alert("Your vote are already counted in this date.");
-    }
   }
   return (
     <View style={styles.container}>

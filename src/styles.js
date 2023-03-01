@@ -86,10 +86,10 @@ const styles = StyleSheet.create({
     borderRadius: 10,
   },
   mypage_text: {
+    textAlign: 'center',
     alignItems: 'center',
     justifyContent: 'center',
-    padding: 5,
-    paddingLeft: 10,
+    padding: 10,
     color: '#FFFFFF',
     marginTop: 30,
     marginBottom: 10,
@@ -97,7 +97,7 @@ const styles = StyleSheet.create({
     borderColor: '#AAFF',
     borderRadius: 10,
     borderWidth: 2,
-    width: '50%',
+    width: '70%',
   },
   mypage_text_loading: {
     alignItems: 'center',

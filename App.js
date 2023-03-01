@@ -6,6 +6,7 @@ import SignUpPage1 from './src/SignUpPage1';
 import SignUpPage2 from './src/SignUpPage2';
 import PasswordPage1 from './src/PasswordPage1';
 import PasswordPage2 from './src/PasswordPage2';
+
 const AppNavigator = createStackNavigator(
   {
     Login: {

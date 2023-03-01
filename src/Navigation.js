@@ -1,11 +1,11 @@
 import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import HomeComponent from './HomePage';
-// import LoginComponent from './LoginPage';
-
+import MypageComponent from './MyPage';
+import ResultComponent from './Result';
 import Icon from 'react-native-vector-icons/Entypo';
 import { NavigationContainer } from '@react-navigation/native';
-import MypageComponent from './MyPage';
+
 
 const Tab = createBottomTabNavigator();
 
@@ -15,7 +15,6 @@ function MyTabs() {
       <Tab.Navigator screenOptions={({ route }) => ({
         tabBarIcon: ({ focused, color, size }) => {
           if (route.name === 'Home') {
-            console.log(size, color)
             return (
               <Icon name="home" color={color} size={20} />
             )
@@ -25,7 +24,7 @@ function MyTabs() {
             )
           }
           return (
-            null
+            <Icon name="calendar" color={color} size={20} />
           );
         },
         tabBarInactiveTintColor: '#999999',
@@ -34,7 +33,23 @@ function MyTabs() {
         <Tab.Screen name="Home" component={HomeComponent} options={{
           headerShown: false,
           tabBarStyle: {
-            height: 70,
+            height: 80,
+            paddingHorizontal: 5,
+            paddingTop: 10,
+            backgroundColor: '#303030',
+            position: 'absolute',
+            borderTopWidth: 0,
+          },
+          tabBarLabelStyle: {
+            fontSize: 10,
+            color: '#FFFFFF',
+          }
+
+        }} />
+        <Tab.Screen name="Result" component={ResultComponent} options={{
+          headerShown: false,
+          tabBarStyle: {
+            height: 80,
             paddingHorizontal: 5,
             paddingTop: 10,
             backgroundColor: '#303030',
@@ -50,7 +65,7 @@ function MyTabs() {
         <Tab.Screen name="MyPage" component={MypageComponent} options={{
           headerShown: false,
           tabBarStyle: {
-            height: 70,
+            height: 80,
             paddingHorizontal: 5,
             paddingTop: 10,
             backgroundColor: '#303030',
@@ -64,7 +79,7 @@ function MyTabs() {
 
         }} />
       </Tab.Navigator>
-    </NavigationContainer >
+    </NavigationContainer>
   );
 }
 

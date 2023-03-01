@@ -1,9 +1,8 @@
 const { apiServerDomain } = require('./constants');
 
 async function voteResult(date, grade) {
-  `${apiServerDomain}/app/vote-result?date=${date}&grade=${grade}`;
+  const apiUrl = `${apiServerDomain}/app/vote-result?date=${date}&grade=${grade}`;
   const myHeaders = new Headers();
-
   const requestOptions = {
     method: 'GET',
     headers: myHeaders,

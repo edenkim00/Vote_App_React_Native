@@ -14,10 +14,10 @@
     "@react-native-community/masked-view": "^0.1.11",
     "@react-native-picker/picker": "^2.4.8",
     "@react-navigation/bottom-tabs": "^6.5.3",
-    "@react-navigation/native": "^6.1.2",
+    "@react-navigation/native": "^6.1.4",
     "object-assign": "^4.1.1",
     "react": "18.2.0",
-    "react-native": "0.71.0",
+    "react-native": "^0.71.0",
     "react-native-date-picker": "^4.2.6",
     "react-native-gesture-handler": "^2.9.0",
     "react-native-picker-select": "^8.0.4",
@@ -44,8 +44,5 @@
     "prettier": "^2.4.1",
     "react-test-renderer": "18.2.0",
     "typescript": "4.8.4"
-  },
-  "jest": {
-    "preset": "react-native"
   }
 }

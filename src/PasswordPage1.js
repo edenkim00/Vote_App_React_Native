@@ -6,6 +6,7 @@ function PaswordComponent({ navigation }) {
     const [email, setEmail] = useState('');
     const [code, setCode] = useState(null);
     const [authCode, setAuthCode] = useState('');
+    const [verified, setVerified] = useState(false);
 
     const handleEmailValidation = async () => {
         const domain = email.split('@')[1]
@@ -19,13 +20,31 @@ function PaswordComponent({ navigation }) {
         Alert.alert('Please check your email inbox.')
     }
 
+    const handleVerify = async () => {
+
+    }
+
     const handleNextPage = async () => {
-        if (code != null && code == authCode) {
+        try {
+            if (code == null) {
+                Alert.alert('Please verify your email ahead.');
+                return;
+            }
+            if (authCode != code) {
+                Alert.alert('Auth code is not matched.');
+                return;
+            }
+            if (email == '') {
+                Alert.alert('Please retry later.');
+                return;
+            }
+            setVerified(true)
             navigation.navigate('PasswordPage2', { 'email': email });
             return;
+        } catch (err) {
+            Alert.alert('Please retry later.');
+            return;
         }
-        Alert.alert('Verification Code does not match.')
-
     };
     return (
         <View style={styles.container}>
@@ -51,10 +70,11 @@ function PaswordComponent({ navigation }) {
                     value={authCode}
                     onChangeText={(text) => setAuthCode(text)}
                     secureTextEntry={false}
+                    editable={!verified}
                 />
                 <Text style={styles.paddingTop10}></Text>
                 <View style={styles.button}>
-                    <Button title="Next" onPress={handleNextPage} color='#FFFFFF' />
+                    <Button title="Verify" onPress={handleNextPage} color='#FFFFFF' />
                 </View>
             </ImageBackground>
         </View>
