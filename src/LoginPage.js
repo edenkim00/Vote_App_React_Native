@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Alert, View, Text, TextInput, Button, StyleSheet, ImageBackground } from 'react-native';
+import { Alert, View, Text, TextInput, Button, ImageBackground } from 'react-native';
 import { styles } from './styles';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { postLogin } from './api/Login';
@@ -9,8 +9,6 @@ function LoginComponent({ navigation }) {
   const [password, setPassword] = useState('');
 
   const handleLogin = async () => {
-    navigation.navigate('BottomTab');
-
     const domain = email.split('@')[1]
     if (domain != 'pupils.nlcsjeju.kr') {
       Alert.alert('This is not a school email.')
@@ -26,12 +24,14 @@ function LoginComponent({ navigation }) {
       return
     }
     const apiResult = await postLogin(email, password);
-    if (apiResult.code == 1000) {
+    console.log(apiResult);
+    if (apiResult.code === 1000) {
       const loginInfo = apiResult.result;
-      await AsyncStorage.setItem('loginInfo', JSON.stringify(loginInfo));
+      await Promise.all([AsyncStorage.setItem('loginInfo', JSON.stringify(loginInfo)), AsyncStorage.setItem('email', email)]);
+      
       navigation.navigate('BottomTab')
       return;
-    } else if (apiResult.code == 3001) {
+    } else if (apiResult.code === 3001) {
       Alert.alert("Check the email and password again.");
       return;
     }
