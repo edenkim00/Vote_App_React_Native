@@ -9,6 +9,9 @@ function MypageComponent({ navigation }) {
   const [name, setName] = useState('');
   const [grade, setGrade] = useState('');
   const [loading, setLoading] = useState(true);
+  const handleLogout = async () => {
+    navigation.navigate('Login');
+  }
   React.useEffect(() => {
     const fetchUserInfo = async () => {
       try {
@@ -33,7 +36,7 @@ function MypageComponent({ navigation }) {
     }
     fetchUserInfo()
   }, []);
-  
+
   return (
     loading ?
       <View style={styles.container} >
@@ -52,6 +55,9 @@ function MypageComponent({ navigation }) {
           <Text style={styles.mypage_text}>Name:    {name}</Text>
           <Text style={styles.mypage_text}>Grade:   {grade}</Text>
           <Text style={{ marginTop: 48 }}></Text>
+          <View style={styles.button}>
+            <Button title="Logout" onPress={handleLogout} color='#FFFFFF' />
+          </View>
         </ImageBackground>
       </View>
 
