@@ -1,16 +1,21 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import React, { useState, useEffect } from 'react';
-import { ImageBackground, View, Text, Button, Alert } from 'react-native';
+import { LogBox, ImageBackground, View, Text, Button, Alert } from 'react-native';
 import { userInfo } from './api/UserInfo';
 import { styles } from './styles';
 
-function MypageComponent({ navigation }) {
+LogBox.ignoreLogs([
+  'Non-serializable values were found in the navigation state',
+]);
+function MypageComponent({ navigation, route }) {
+  const rootNavigation = route.params.rootNavigation
   // mypage info 받아오기.
   const [name, setName] = useState('');
   const [grade, setGrade] = useState('');
   const [loading, setLoading] = useState(true);
   const handleLogout = async () => {
-    navigation.navigate('Login');
+    rootNavigation.navigate('Login');
+    await Promise.all([AsyncStorage.removeItem('userName'), AsyncStorage.removeItem('userGrade', null)])
   }
   React.useEffect(() => {
     const fetchUserInfo = async () => {

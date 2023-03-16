@@ -9,7 +9,7 @@ import { NavigationContainer } from '@react-navigation/native';
 
 const Tab = createBottomTabNavigator();
 
-function MyTabs() {
+function MyTabs({ navigation }) {
   return (
     <NavigationContainer>
       <Tab.Navigator screenOptions={({ route }) => ({
@@ -62,7 +62,7 @@ function MyTabs() {
           }
 
         }} />
-        <Tab.Screen name="MyPage" component={MypageComponent} options={{
+        <Tab.Screen name="MyPage" component={MypageComponent} initialParams={{rootNavigation: navigation}} options={{
           headerShown: false,
           tabBarStyle: {
             height: 80,
